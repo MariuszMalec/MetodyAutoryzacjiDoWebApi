@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using WebAppi.Models;
+using WebAppi.Service;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,13 +12,23 @@ namespace WebAppi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly IUserService _userService;
+
+        public UserController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
         // GET: api/<UserController>
+
+
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             var users = new List<User> () 
             {
-                new User (){ FirstName = "John", LastName = "Stokton" }
+                new User (){ Id =1 , Name = "John", Password = "John" }
             };
             if (!users.Any())
                 return NotFound($"Brak uzytkowników!");
@@ -32,12 +44,32 @@ namespace WebAppi.Controllers
             }
             var users = new List<User>()
             {
-                new User (){ FirstName = "John", LastName = "Stokton" }
+                new User (){ Id = 2, Name = "Kate", Password = "Kate" }
             };
             if (!users.Any())
                 return NotFound($"Brak uzytkowników!");
             return Ok(users);
         }
+
+        [AllowAnonymous]
+        [HttpPost("authenticateAll")]
+        public async Task<IActionResult> GetAllUsersWithAuthenticate([FromBody] AuthenticateModel model)
+        {
+            var user = await _userService.Authenticate(model.Username, model.Password);
+
+            if (user == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            var users = await _userService.GetAll();
+
+            if (users == null)
+            {
+                return NotFound($"brak uzytkownikow!");
+            }
+
+            return Ok(users);
+        }
+
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]

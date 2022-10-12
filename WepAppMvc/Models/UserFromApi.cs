@@ -1,6 +1,6 @@
-﻿namespace WebAppi.Models
+﻿namespace WepAppMvc.Models
 {
-    public class User
+    public class UserFromApi
     {
         public int Id { get; set; }
         public string Name { get; set; }
