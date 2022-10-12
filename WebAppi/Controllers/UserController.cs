@@ -26,25 +26,25 @@ namespace WebAppi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var users = new List<User> () 
+            var users = new List<Client> () 
             {
-                new User (){ Id =1 , Name = "John", Password = "John" }
+                new Client (){ FirstName = "John", LastName = "John" }
             };
             if (!users.Any())
                 return NotFound($"Brak uzytkowników!");
             return Ok(users);
         }
 
-        [HttpGet("{email}/{password}")]
-        public async Task<IActionResult> Get([FromRoute] string email, string password)
+        [HttpGet("{email}/{password}/{token}")]
+        public async Task<IActionResult> Get([FromRoute] string email, string password, string token)
         {
-            if (email != "mariusz")
+            if (token != "123456")
             {
                 return Unauthorized("Unauthorized 401!");
             }
-            var users = new List<User>()
+            var users = new List<Client>()
             {
-                new User (){ Id = 2, Name = "Kate", Password = "Kate" }
+                new Client (){ FirstName = "Kate", LastName = "Kate" }
             };
             if (!users.Any())
                 return NotFound($"Brak uzytkowników!");
@@ -69,7 +69,6 @@ namespace WebAppi.Controllers
 
             return Ok(users);
         }
-
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]

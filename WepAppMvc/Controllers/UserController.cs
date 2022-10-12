@@ -42,12 +42,13 @@ namespace WepAppMvc.Controllers
         public async Task<ActionResult> IndexWithRoute()
         {
             var model = new AuthenticateModel();
-            model.Email = "mariusz";
-            model.Password = "mm";
+            model.Email = "admin";
+            model.Password = "admin";
+            model.Token = "123456";
 
             HttpClient client = httpClientFactory.CreateClient();
 
-            var request = new HttpRequestMessage(HttpMethod.Get, $"{AppiUrl}/User/{model.Email}/{model.Password}");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{AppiUrl}/User/{model.Email}/{model.Password}/{model.Token}");
 
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -83,7 +84,7 @@ namespace WepAppMvc.Controllers
 
                 HttpClient client = httpClientFactory.CreateClient();
 
-                var request = new HttpRequestMessage(HttpMethod.Get, $"{AppiUrl}/User/{model.Email}/{model.Password}");
+                var request = new HttpRequestMessage(HttpMethod.Get, $"{AppiUrl}/User/{model.Email}/{model.Password}/{model.Token}");
 
                 request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -238,7 +239,7 @@ namespace WepAppMvc.Controllers
         {
             var viewModel = JsonConvert.DeserializeObject<List<UserFromApi>>((string)TempData["UserFromApi"]);
 
-            ViewBag.Users = TempData["UserFromNbaApii"];
+            ViewBag.Users = TempData["UserFromApi"];
 
             return View(viewModel);
         }
