@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using WebAppi.Authentication.ApiKey;
 using WebAppi.Models;
 using WebAppi.Service;
 
@@ -21,12 +22,10 @@ namespace WebAppi.Controllers
 
         // GET: api/<UserController>
 
-
-
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("WithoutAuthorize")]
+        public async Task<IActionResult> GetWithoutAuthorize()
         {
-            var users = new List<Client> () 
+            var users = new List<Client>()
             {
                 new Client (){ FirstName = "John", LastName = "John" }
             };
@@ -35,8 +34,21 @@ namespace WebAppi.Controllers
             return Ok(users);
         }
 
-        [HttpGet("{email}/{password}/{token}")]
-        public async Task<IActionResult> Get([FromRoute] string email, string password, string token)
+        [HttpGet("ApiKey")]
+        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.AuthenticationScheme)]
+        public async Task<IActionResult> GetWithApiKey()
+        {
+            var users = new List<Client>()
+            {
+                new Client (){ FirstName = "John", LastName = "John" }
+            };
+            if (!users.Any())
+                return NotFound($"Brak uzytkowników!");
+            return Ok(users);
+        }
+
+        [HttpGet("Token/{token}")]
+        public async Task<IActionResult> GetWithToken([FromRoute] string token)
         {
             if (token != "123456")
             {
@@ -51,9 +63,9 @@ namespace WebAppi.Controllers
             return Ok(users);
         }
 
-        [AllowAnonymous]
-        [HttpPost("authenticateAll")]
-        public async Task<IActionResult> GetAllUsersWithAuthenticate([FromBody] AuthenticateModel model)
+        [HttpPost("BasicAuthorize")]
+        [Authorize]
+        public async Task<IActionResult> GetWithBasicAuthorize([FromBody] AuthenticateModel model)
         {
             var user = await _userService.Authenticate(model.Username, model.Password);
 
