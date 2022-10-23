@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppiApiKey", "WebAppiApi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppiBasic", "WebAppiBasic\WebAppiBasic.csproj", "{6F7A06B3-0411-4B5F-91AC-C2FFAF6C9408}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppiJwtToken", "WebAppiJwtToken\WebAppiJwtToken.csproj", "{C7404C1C-0E02-47AB-B0A1-4548578B5B0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{6F7A06B3-0411-4B5F-91AC-C2FFAF6C9408}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F7A06B3-0411-4B5F-91AC-C2FFAF6C9408}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F7A06B3-0411-4B5F-91AC-C2FFAF6C9408}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7404C1C-0E02-47AB-B0A1-4548578B5B0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7404C1C-0E02-47AB-B0A1-4548578B5B0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7404C1C-0E02-47AB-B0A1-4548578B5B0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7404C1C-0E02-47AB-B0A1-4548578B5B0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
