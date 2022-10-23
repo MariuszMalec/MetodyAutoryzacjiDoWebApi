@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Net;
 using WebAppi.Authentication.ApiKey;
 using WebAppi.Models;
 using WebAppi.Service;
@@ -63,9 +64,28 @@ namespace WebAppi.Controllers
             return Ok(users);
         }
 
-        [HttpPost("BasicAuthorize")]
+        // [ProducesResponseType(200, Type = typeof(User))] z getem>??
+
+
+        //[AllowAnonymous]
+        [HttpGet("BasicAuthenticate")]
         [Authorize]
-        public async Task<IActionResult> GetWithBasicAuthorize([FromBody] AuthenticateModel model)
+        //[Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.AuthenticationScheme)]
+        public async Task<IActionResult> GetWithBasicAuthorize()
+        {
+
+            var users = await _userService.GetAll();
+
+            if (users == null)
+            {
+                return NotFound($"brak uzytkownikow!");
+            }
+
+            return Ok(users);
+        }
+
+        [HttpPost("FromBodyAuthenticate")]
+        public async Task<IActionResult> GetWithBodyAuthorize([FromBody] AuthenticateModel model)
         {
             var user = await _userService.Authenticate(model.Username, model.Password);
 
