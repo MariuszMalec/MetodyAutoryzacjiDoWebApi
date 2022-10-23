@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication;
 using NSwag;
 using NSwag.Generation.Processors.Security;
+using WebAppi.Authentication.ApiKey;
 using WebAppi.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,10 +12,16 @@ builder.Services.AddControllers();
 
 builder.Services.AddTransient<IUserService, UserService>();
 
-builder.Services.AddAuthentication("BasicAuthentication")
-.AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+ConfigurationManager configuration = builder.Configuration;
+IWebHostEnvironment environment = builder.Environment;
+builder.Services
+    .AddAuthentication(sharedOptions =>
+    {
+        sharedOptions.DefaultScheme = ApiKeyAuthenticationOptions.AuthenticationScheme;
+    })
+    .AddApiKey<ApiKeyAuthenticationService>(options => configuration.Bind("ApiKeyAuth", options));
 
-//TODO here using nswag.aspnecore nugets
+////TODO here using nswag.aspnecore nugets
 builder.Services.AddOpenApiDocument(options =>
 {
     options.PostProcess = doc =>
@@ -25,27 +32,17 @@ builder.Services.AddOpenApiDocument(options =>
         doc.Info.TermsOfService = "None";
     };
     options.AddSecurity(
-        "Basic",
+        "ApiKey",
         new OpenApiSecurityScheme
         {
-            Type = OpenApiSecuritySchemeType.Basic,
-            Name = "Authorization",
+            Type = OpenApiSecuritySchemeType.ApiKey,
+            Name = "ApiKey",
             In = OpenApiSecurityApiKeyLocation.Header,
-            Description = "Type username and password"
+            Description = "Type Api Key below"
         });
 
-    options.OperationProcessors.Add(new OperationSecurityScopeProcessor("BasicAuth"));
+    options.OperationProcessors.Add(new OperationSecurityScopeProcessor("ApiKey"));
 });
-
-//must be added!
-//ConfigurationManager configuration = builder.Configuration;
-//IWebHostEnvironment environment = builder.Environment;
-//builder.Services
-//    .AddAuthentication(sharedOptions =>
-//    {
-//        sharedOptions.DefaultScheme = ApiKeyAuthenticationOptions.AuthenticationScheme;
-//    })
-//    .AddApiKey<ApiKeyAuthenticationService>(options => configuration.Bind("ApiKeyAuth", options));
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

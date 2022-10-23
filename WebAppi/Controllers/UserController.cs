@@ -67,23 +67,6 @@ namespace WebAppi.Controllers
         // [ProducesResponseType(200, Type = typeof(User))] z getem>??
 
 
-        //[AllowAnonymous]
-        [HttpGet("BasicAuthenticate")]
-        [Authorize]
-        //[Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.AuthenticationScheme)]
-        public async Task<IActionResult> GetWithBasicAuthorize()
-        {
-
-            var users = await _userService.GetAll();
-
-            if (users == null)
-            {
-                return NotFound($"brak uzytkownikow!");
-            }
-
-            return Ok(users);
-        }
-
         [HttpPost("FromBodyAuthenticate")]
         public async Task<IActionResult> GetWithBodyAuthorize([FromBody] AuthenticateModel model)
         {
