@@ -5,9 +5,9 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
-using WebAppi.Models;
+using WebAppiBasic.Models;
 
-namespace WebAppi.Service
+namespace WebAppiBasic.Service
 {
     public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
