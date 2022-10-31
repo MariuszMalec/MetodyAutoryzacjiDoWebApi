@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAppiBasic.Service;
 
 namespace WebAppiBasic.Controllers
 {
-    public class UserController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
 
@@ -13,10 +16,6 @@ namespace WebAppiBasic.Controllers
             _userService = userService;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         //[AllowAnonymous]
         [HttpGet("BasicAuthenticate")]
@@ -33,5 +32,6 @@ namespace WebAppiBasic.Controllers
 
             return Ok(users);
         }
+
     }
 }
