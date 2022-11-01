@@ -203,6 +203,14 @@ namespace WepAppMvc.Controllers
 
             request.Content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
 
+            string username = model.Username;
+            string password = model.Password;
+            string svcCredentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(username + ":" + password));
+
+            //request.Headers.Add("Authorization", "Basic " + svcCredentials);
+
+            request.Headers.Authorization = new AuthenticationHeaderValue("Authorization", svcCredentials);
+
             var result = await client.SendAsync(request);
 
             if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
