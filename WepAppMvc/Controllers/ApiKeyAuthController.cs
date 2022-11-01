@@ -22,9 +22,11 @@ namespace WepAppMvc.Controllers
         {
             HttpClient client = httpClientFactory.CreateClient();
 
-            var request = new HttpRequestMessage(HttpMethod.Get, $"{AppiUrl}/User/GetWithApiKey");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{AppiUrl}/Client/ApiKey");
 
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            request.Headers.Add("ApiKey", "8e421ff965cb4935ba56ef7833bf4750");//TODO Apikey do headera
 
             var result = await client.SendAsync(request);
 
