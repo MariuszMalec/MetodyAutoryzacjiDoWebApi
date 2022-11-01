@@ -44,7 +44,7 @@ namespace WebAppiBasic.Service
                 var password = credentials[1];
                 user = await _userService.Authenticate(username, password);
             }
-            catch
+                catch
             {
                 return AuthenticateResult.Fail("Invalid Authorization Header");
             }

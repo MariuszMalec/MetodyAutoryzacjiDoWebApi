@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Text.RegularExpressions;
 using WepAppMvc.Models;
 
 namespace WepAppMvc.Controllers
@@ -31,11 +33,15 @@ namespace WepAppMvc.Controllers
 
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            //request.Content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+            request.Content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
 
-            //request.Headers.Add("Basic", model.Username);
+            string username = model.Username;
+            string password = model.Password;
+            string svcCredentials = Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(username + ":" + password));
 
-            request.Headers.Authorization = new AuthenticationHeaderValue("Basic", model.Username);
+            //request.Headers.Add("Authorization", "Basic " + svcCredentials);
+
+            request.Headers.Authorization = new AuthenticationHeaderValue("Authorization", svcCredentials);
 
             var result = await client.SendAsync(request);
 

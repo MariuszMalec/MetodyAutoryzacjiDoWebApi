@@ -39,8 +39,8 @@ builder.Services.AddSwaggerGen(c =>
 });
 #endregion
 
-builder.Services.AddAuthentication("BasicAuthentication")
-.AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+builder.Services.AddAuthentication("BasicAuthorization")
+.AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthorization", null);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

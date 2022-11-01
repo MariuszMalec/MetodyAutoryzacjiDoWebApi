@@ -27,7 +27,7 @@ builder.Services.AddOpenApiDocument(options =>
     options.PostProcess = doc =>
     {
         doc.Info.Version = "v1";
-        doc.Info.Title = "Tracking API";
+        doc.Info.Title = "ApiKey API";
         doc.Info.Description = "Awesome API";
         doc.Info.TermsOfService = "None";
     };
