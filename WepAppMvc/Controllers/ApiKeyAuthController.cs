@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Net.Http;
 using WepAppMvc.Models;
+using System.Text;
 
 namespace WepAppMvc.Controllers
 {
@@ -44,6 +45,65 @@ namespace WepAppMvc.Controllers
             var users = JsonConvert.DeserializeObject<List<ClientView>>(content);
 
             return View(users);
+        }
+
+        public ActionResult GetAllUsersWithAuthenticate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> GetAllUsersWithAuthenticate(AuthenticateApiKey key)
+        {
+            var client = httpClientFactory.CreateClient();
+
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{AppiUrl}/Client/ApiKey");
+
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            //request.Headers.Authorization = new AuthenticationHeaderValue("ApiKey", key.ApiKey);
+
+            request.Headers.Add("ApiKey", key.ApiKey);//TODO Apikey do headera
+
+            var result = await client.SendAsync(request);
+
+            if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                return Content("Unauthorized!");
+            }
+            if (result.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return Content("NotFound!");
+            }
+
+            var content = await result.Content.ReadAsStringAsync();
+
+            if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                return Content($"Bad Request! {content}");
+            }
+
+            var viewModel = JsonConvert.DeserializeObject<List<ClientView>>(content);
+
+            //return Content($"Result get from Api {content}");
+
+            if (viewModel != null)
+            {
+                //trzeba serilize aby poszlo pomiedzy modelami albo poslac od razu content
+                TempData["ClientFromApi"] = JsonConvert.SerializeObject(viewModel);
+                return RedirectToAction(nameof(ViewClientFromApi));
+            }
+
+            return View();
+        }
+
+        public ActionResult ViewClientFromApi()
+        {
+            var viewModel = JsonConvert.DeserializeObject<List<ClientView>>((string)TempData["ClientFromApi"]);
+
+            ViewBag.Users = TempData["ClientFromApi"];
+
+            return View(viewModel);
         }
 
         // GET: ApiKeyAuthController/Details/5

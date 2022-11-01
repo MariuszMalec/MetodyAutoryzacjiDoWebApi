@@ -20,7 +20,8 @@ namespace WebAppiApiKey.Controllers
         }
 
         [HttpGet("ApiKey")]
-        [Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = ApiKeyAuthenticationOptions.AuthenticationScheme)]Authorize
+        [Authorize]
         public async Task<IActionResult> GetWithApiKey()
         {
             var users = new List<Client>()
