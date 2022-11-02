@@ -197,7 +197,7 @@ namespace WepAppMvc.Controllers
         {
             var client = httpClientFactory.CreateClient();
 
-            var request = new HttpRequestMessage(HttpMethod.Post, $"{AppiUrl}/User/authenticateAll");
+            var request = new HttpRequestMessage(HttpMethod.Post, $"{AppiUrl}/User/FromBodyAuthenticate");
 
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -213,6 +213,8 @@ namespace WepAppMvc.Controllers
 
             var result = await client.SendAsync(request);
 
+            var contentResult = await result.Content.ReadAsStringAsync();
+
             if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
                 return Content("Unauthorized!");
@@ -220,6 +222,16 @@ namespace WepAppMvc.Controllers
             if (result.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
                 return Content("NotFound!");
+            }
+            if (result.StatusCode == System.Net.HttpStatusCode.MethodNotAllowed)
+            {
+                return Content("MethodNotAllowed!");
+            }
+            if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                if (contentResult.Contains("Username or password is incorrect"))
+                    return Content("Username or password is incorrect!");
+                return Content("BadRequest!");
             }
 
             var content = await result.Content.ReadAsStringAsync();
