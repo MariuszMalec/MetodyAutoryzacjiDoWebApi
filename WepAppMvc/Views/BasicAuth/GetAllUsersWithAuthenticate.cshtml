@@ -8,24 +8,30 @@
 
 <h4>ViewAuthenticationModel</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="GetAllUsersWithAuthenticate">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
+
+<div class="card bg-dark text-white">
+    <img class="card-img" width="500" height="600" style="vertical-align:middle" src="https://images.unsplash.com/photo-1605270488815-93566ee46a1f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1173&q=80" alt="Card image">
+    <div class="card-img-overlay">
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="GetAllUsersWithAuthenticate">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Username" class="control-label"></label>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Get users" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Get users" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 

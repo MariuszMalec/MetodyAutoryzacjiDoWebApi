@@ -8,19 +8,25 @@
 
 <h4>AuthenticateApiKey</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="GetAllUsersWithAuthenticate">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ApiKey" class="control-label"></label>
-                <input asp-for="ApiKey" class="form-control" />
-                <span asp-validation-for="ApiKey" class="text-danger"></span>
+
+<div class="card bg-dark text-white">
+    <img class="card-img" width="500" height="600" style="vertical-align:middle" src="https://images.unsplash.com/photo-1537420327992-d6e192287183?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80" alt="Card image">
+    <div class="card-img-overlay">
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="GetAllUsersWithAuthenticate">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="ApiKey" class="control-label"></label>
+                        <input asp-for="ApiKey" class="form-control" />
+                        <span asp-validation-for="ApiKey" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Get" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Get" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
