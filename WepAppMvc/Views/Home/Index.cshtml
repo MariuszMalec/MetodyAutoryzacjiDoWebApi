@@ -2,7 +2,25 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h3 class="card-title font-weight-bold col">Welcome</h3>
+@*<a class="btn btn-primary" asp-controller="account" asp-action="Login">Go to login</a>*@
+<hr />
+<div class="card bg-dark text-white">
+    <img class="card-img" width="500" height="600" style="vertical-align:middle" src="https://images.unsplash.com/photo-1513628253939-010e64ac66cd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="Card image">
+    <div class="card-img-overlay">
+@*        <h5 class="card-title">Register or login</h5>*@
+        <p class="card-text">Web app with MVC project</p>
+    </div>
+    <div class="container mt-3">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    @*<img class="shape-circle-image" alt="Image placeholder" src="~/mm.jpg">*@
+                    <div class="shape__name">
+                        Author : Mariusz Malec
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

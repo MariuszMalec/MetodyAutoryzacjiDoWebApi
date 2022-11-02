@@ -2,3 +2,11 @@
     border-right: 5px solid #bbb;
     background: #0094ff;
 }
+
+.myBackground {
+    background-image: url("/hackerX512.png");
+    background-size: 150px;
+    width: 300px;
+    height: 300px;
+    border: solid 2px red;
+}
