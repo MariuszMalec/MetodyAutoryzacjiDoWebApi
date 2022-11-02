@@ -18,9 +18,9 @@ namespace WebAppiBasic.Controllers
 
 
         //[AllowAnonymous]
-        [HttpGet("BasicAuthenticate")]
+        [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetWithBasicAuthorize()
+        public async Task<IActionResult> Index()
         {
 
             var users = await _userService.GetAll();

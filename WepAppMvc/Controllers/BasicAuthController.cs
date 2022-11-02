@@ -29,7 +29,7 @@ namespace WepAppMvc.Controllers
 
             HttpClient client = httpClientFactory.CreateClient();
 
-            var request = new HttpRequestMessage(HttpMethod.Get, $"{AppiUrl}/User/BasicAuthenticate");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{AppiUrl}/User");
 
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -71,7 +71,7 @@ namespace WepAppMvc.Controllers
         {
             var client = httpClientFactory.CreateClient();
 
-            var request = new HttpRequestMessage(HttpMethod.Get, $"{AppiUrl}/User/BasicAuthenticate");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{AppiUrl}/User");
 
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
