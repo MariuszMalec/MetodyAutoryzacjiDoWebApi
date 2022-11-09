@@ -1,5 +1,4 @@
-using NSwag;
-using NSwag.Generation.Processors.Security;
+using Microsoft.OpenApi.Models;
 using WebAppiApiKey.Authentication.ApiKey;
 using WebAppiApiKey.Service;
 
@@ -21,28 +20,34 @@ builder.Services
     })
     .AddApiKey<ApiKeyAuthenticationService>(options => configuration.Bind("ApiKeyAuth", options));
 
-////TODO here using nswag.aspnecore nugets
-builder.Services.AddOpenApiDocument(options =>
+#region Configure Swagger  
+builder.Services.AddSwaggerGen(c =>
 {
-    options.PostProcess = doc =>
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApiKey", Version = "v1" });
+    c.AddSecurityDefinition("apikey", new OpenApiSecurityScheme
     {
-        doc.Info.Version = "v1";
-        doc.Info.Title = "ApiKey API";
-        doc.Info.Description = "Awesome API";
-        doc.Info.TermsOfService = "None";
-    };
-    options.AddSecurity(
-        "ApiKey",
-        new OpenApiSecurityScheme
-        {
-            Type = OpenApiSecuritySchemeType.ApiKey,
-            Name = "ApiKey",
-            In = OpenApiSecurityApiKeyLocation.Header,
-            Description = "Type Api Key below"
-        });
-
-    options.OperationProcessors.Add(new OperationSecurityScopeProcessor("ApiKey"));
+        Name = "ApiKey",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "ApiKey",
+        In = ParameterLocation.Header,
+        Description = "ApiKey Authorization header using scheme."
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                          new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "apikey"
+                                }
+                            },
+                            new string[] {}
+                    }
+                });
 });
+#endregion
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -53,9 +58,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    //app.UseResponseCaching();
-    app.UseOpenApi();
-    app.UseSwaggerUi3();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
