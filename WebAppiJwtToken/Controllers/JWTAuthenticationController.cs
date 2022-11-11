@@ -54,9 +54,9 @@ namespace WebAppiJwtToken.Controllers
 
             //Validate the User Credentials    
             //Demo Purpose, I have Passed HardCoded User Information    
-            if (login.Username == "Jignesh")
+            if (login.Username == "Admin")
             {
-                user = new UserModel { Username = "Jignesh Trivedi", EmailAddress = "test.btest@gmail.com" };
+                user = new UserModel { Username = "Admin Admminek", EmailAddress = "admin@example.com" };
             }
             return user;
         }
